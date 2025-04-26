@@ -12,6 +12,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>('light');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   useEffect(() => {
     // Check for user preference in local storage
@@ -24,6 +25,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setTheme('dark');
       }
     }
+
+    // Add transition class to handle smooth theme changes
+    document.documentElement.classList.add('transition-colors');
+    document.documentElement.classList.add('duration-300');
   }, []);
   
   useEffect(() => {
@@ -37,7 +42,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }, [theme]);
   
   const toggleTheme = () => {
+    setIsTransitioning(true);
     setTheme(theme === 'light' ? 'dark' : 'light');
+    
+    // Reset transitioning state after animation completes
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300);
   };
   
   return (

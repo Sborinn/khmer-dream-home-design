@@ -13,7 +13,7 @@ import ScrollReveal from "../components/ScrollReveal";
 export default function Index() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col transition-colors duration-300">
         <Navbar />
         <main className="flex-grow">
           <HeroSection />
